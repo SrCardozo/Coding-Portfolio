@@ -1,0 +1,29 @@
+Sub Contratopf()
+
+Set objword = CreateObject("word.application")
+
+objword.Visible = True
+
+Set arqcontrato = objword.documents.Open("caminho-do-modelo\ContratoPF.docx")
+Set conteudoDoc = arqcontrato.Application.Selection
+
+For i = 1 To 11
+
+    conteudoDoc.Find.Text = Cells(i, 2).Value
+    conteudoDoc.Find.Replacement.Text = Cells(i, 3).Value
+    conteudoDoc.Find.Execute Replace:=2
+
+Next
+
+arqcontrato.saveas2 ("caminho-do-contrato\ContratoPF" & Cells(1, 3).Value & ".docx")
+
+arqcontrato.Close
+objword.Quit
+
+Set objwork = Nothing
+Set arqcontrato = Nothing
+Set conteudocontrato = Nothing
+
+MsgBox ("feito")
+
+End Sub
