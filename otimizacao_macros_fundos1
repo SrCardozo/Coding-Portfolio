@@ -75,7 +75,7 @@ Dim endereco As String
     On Error GoTo 0
 
 'remover filtros e restaurar configurações da planilha
-    Worksheets("Ops_Fundos").Range("A1").AutoFilter
+    Worksheets("Fundos").Range("A1").AutoFilter
 
      With Application
         .EnableEvents = True
