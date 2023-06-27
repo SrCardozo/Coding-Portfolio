@@ -1,0 +1,56 @@
+Sub aplicar1()
+
+Sheets("Fundos").Range("A1").AutoFilter Field:=5, Criteria1:="aplicar"
+Sheets("Fundos").Range("A1").AutoFilter Field:=8, Criteria1:="sim"
+Sheets("Fundos").Range("A1").AutoFilter Field:=16, Criteria1:="ativo"
+
+ifinal = Sheets("Fundos").Cells(Rows.Count, 1).End(xlUp).Row
+
+Sheets("Fundos").Range("a1:f" & ifinal).Copy
+
+Workbooks.Add
+Sheets(1).Range("A1").Select
+Sheets(1).Range("A1:P1").PasteSpecial Paste:=xlAll
+Sheets(1).Range("A1:P1").PasteSpecial Paste:=xlPasteValues
+Selection.Columns.AutoFit
+
+
+Application.DisplayAlerts = False
+ActiveWorkbook.SaveAs Filename:="C:\Users\username\Downloads\VBA\aplicacao.xlsx"
+
+ActiveWorkbook.Close
+Application.DisplayAlerts = True
+
+
+'email aplicacao
+
+
+  Set OutApp = CreateObject("Outlook.Application")
+    Set OutMail = OutApp.CreateItem(0)
+
+    endereco = "C:\Users\username\Downloads\VBA\aplicacao.xlsx"
+    msgaplicacao = "Segue anexo o aporte."
+
+    On Error Resume Next
+    With OutMail
+        .To = "Aplicação <email@dominio.com>"
+        .CC = "Farmers <email@dominio.com>"
+        .BCC = ""
+        .Subject = "Aplicar em fundos"
+        .body = msgaplicacao
+        .Attachments.Add endereco
+        .Display   'or use .display
+    End With
+    On Error GoTo 0
+    
+     With Application
+        .EnableEvents = True
+        .ScreenUpdating = True
+    End With
+    
+    'Call cleanFilter
+    
+    Set OutMail = Nothing
+    Set OutApp = Nothing
+
+End Sub
