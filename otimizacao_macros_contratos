@@ -1,4 +1,5 @@
 Sub Contratopf()
+Application.ScreenUpdating = False
 
 Set objword = CreateObject("word.application")
 
@@ -15,6 +16,17 @@ For i = 1 To 11
 
 Next
 
+If Range("A5").Value <> "RG" And Not IsEmpty(Range("A5").Value) Then
+    
+    With conteudoDoc.Find
+    .Text = "RG"
+    .Replacement.Text = Range("A5").Value
+    .MatchWholeWord = True
+    .Execute Replace:=2
+    End With
+    
+End If
+
 arqcontrato.saveas2 ("caminho-do-contrato\ContratoPF" & Cells(1, 3).Value & ".docx")
 
 arqcontrato.Close
@@ -24,6 +36,12 @@ Set objwork = Nothing
 Set arqcontrato = Nothing
 Set conteudocontrato = Nothing
 
-MsgBox ("feito")
+Range("C1:C5").ClearContents
+Range("C7:C8").ClearContents
+Range("D6").ClearContents
+
+Application.ScreenUpdating = True
+
+MsgBox ("Contrato gerado com sucesso!")
 
 End Sub
