@@ -26,7 +26,7 @@ If produto = vbCancel Then
     End
 End If
 
-'Identifica se o arqquivo de reservas já está aberto. Caso não esteja ele irá abrir o arquivo, limpar os dados (exceto o cabeçalho) e definir a primeira linha de colagem como a linha 2 (pois a linha 1 é o cabeçalho). Também ativa a planilha atual _
+'Identifica se o arquivo de reservas já está aberto. Caso não esteja ele irá abrir o arquivo, limpar os dados (exceto o cabeçalho) e definir a primeira linha de colagem como a linha 2 (pois a linha 1 é o cabeçalho). Também ativa a planilha atual _
   para continuar a execução da macro. Caso a planilha já esteja aberta, ele identifica se a planilha já contém algum dado... se estiver vazia, a primeira linha de colagem será a linha 2, se não estiver vazia a linha de colagem será a primeira linha  _
   após a última linha preenchida
   
@@ -58,7 +58,10 @@ For planilha = 1 To 3
   ult_reserva = ActiveSheet.Range("A1").End(xlDown).Row
   col_reservas = Application.Match("RESERVAS", ActiveSheet.Rows(1), 0)
 
-  'Se o usuário tiver definido para enviar um produto específico, a primeira e a última coluna serão a mesma, e estas serão iguais à coluna referente ao produto informado
+  'Se o usuário tiver definido para enviar um produto específico, a primeira e a última coluna serão a mesma, que será igual à coluna referente ao produto informado _
+    Caso não, a primeira e a última coluna serão definidas por seus nomes, e a macro irá extrair dados de todas as colunas contidas nesse intervalo, independente de se adicionar, _
+    renomear ou excluir colunas
+
   If envio = vbYes Then
       prim_coluna = Application.Match(produto, ActiveSheet.Rows(1), 0)
       ult_coluna = Application.Match(produto, ActiveSheet.Rows(1), 0)
@@ -75,12 +78,13 @@ For planilha = 1 To 3
   'Percorrer cada linha da planilha
       For linha = 2 To ult_reserva
   
-          'Verifica se o cliente tem alguma reserva
+          'Verifica se o cliente tem alguma reserva, em uma coluna que soma os valores contidos nas colunas do intervalo verificado
           If Cells(linha, col_reservas).Value = 0 Then
   
           GoTo ProximaLinha
   
-          Else 'Percorrer cada coluna de cada produto se o cliente tiver reserva
+          Else 'Caso o cliente tenha reserva, a macro percorre cada coluna coluna de cada produto para verificar de qual produto o cliente tem reserva, _
+                e salva os dados da reserva em outro arquivo
               For col = prim_coluna To ult_coluna
   
               'Verifica se o cliente tem reserva do produto
@@ -88,7 +92,7 @@ For planilha = 1 To 3
   
                   GoTo ProximoProduto
   
-                  Else 'Cola os dados da reserva na planilha modelo
+                  Else ''Cola' os dados da reserva na planilha modelo, através de atribuição de valores
   
                       planilhaDestino.Cells(linha_colagem, 1).Value = ActiveSheet.Cells(linha, 1).Value
                       planilhaDestino.Cells(linha_colagem, 2).Value = ActiveSheet.Cells(linha, 2).Value
@@ -99,7 +103,8 @@ For planilha = 1 To 3
   
                       linha_colagem = linha_colagem + 1
                   End If
-  
+
+'Para sair dos loops quando as condições verificadas forem false, utilizei rótulos na macro e o comando GoTO
   ProximoProduto:
               Next
   
@@ -109,7 +114,5 @@ For planilha = 1 To 3
           Next
 
 Next
-
- 
 
 End Sub
