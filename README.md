@@ -29,3 +29,4 @@ Sinta-se à vontade para explorar o código-fonte e utilizá-lo em seus próprio
 Se você tiver alguma dúvida, sugestão ou quiser entrar em contato comigo, você pode fazê-lo através do meu perfil do LinkedIn [aqui](https://www.linkedin.com/in/alex-cardozo).
 
 Espero que encontre essas automações úteis e que elas o inspirem em seus próprios projetos de automação. Obrigado por visitar meu repositório!
+[![GitHub License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
