@@ -1,3 +1,9 @@
+#Descrição do projeto:
+#https://github.com/SrCardozo/Coding-Portfolio/blob/main/Python%20Projects/Descricao_Projeto_Indicadores.ipynb
+
+#Rascunho do projeto (processo do desenvolvimento) e visualização de outputs:
+#https://github.com/SrCardozo/Coding-Portfolio/blob/main/Python%20Projects/Rascunho_Automacao_Indicadores.ipynb
+
 '''
 Planejamento do projeto
 
